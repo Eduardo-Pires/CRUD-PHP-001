@@ -4,7 +4,7 @@
         $db_host = "localhost";
         $db_port = 5432;
         $db_username = "postgres";
-        $db_password = /*adicionar senha*/
+        $db_password = "senha";
         $db_name = "postgres";
         $db_schema = "public";
 
