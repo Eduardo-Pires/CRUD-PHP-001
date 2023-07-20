@@ -14,18 +14,14 @@ class PessoaRepository implements IPessoaRepository
 
     public function criarPessoa($pessoa)
     {
-        try{
-            $sql = <<<SQL
-                INSERT INTO Pessoa (nome, email, telefone)
-                VALUES (?,?,?)
-            SQL;
+        $sql = <<<SQL
+            INSERT INTO Pessoa (nome, email, telefone)
+            VALUES (?,?,?)
+        SQL;
 
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$pessoa->getnome(), $pessoa->getEmail(), $pessoa->getTelefone()]);
-            $pessoa->setId($this->pdo->lastInsertId());
-        }catch (Exception $e){
-            return('Falha no cadastro da pessoa, '. $e->getMessage());
-        }
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([$pessoa->getnome(), $pessoa->getEmail(), $pessoa->getTelefone()]);
+        $pessoa->setId($this->pdo->lastInsertId());
     }
 
     public function listarPessoas()
@@ -35,28 +31,23 @@ class PessoaRepository implements IPessoaRepository
 
     public function obterPessoaPorId($id)
     {
-        try{
-            if($id == null)
-            {
-                throw new Exception("ID com valor ilegal: NULL");
-            }
-            else
-            {
-                $sql = <<<SQL
-                    SELECT nome, email, telefone
-                    FROM pessoa
-                    WHERE id = ?
-                SQL;
+        if($id == null)
+        {
+            throw new Exception("ID com valor ilegal: NULL");
+        }
+        else
+        {
+            $sql = <<<SQL
+                SELECT nome, email, telefone
+                FROM pessoa
+                WHERE id = ?
+            SQL;
 
-                $stmt = $this->pdo->prepare($sql);
-                $stmt->execute($id);
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($id);
 
-                $row = $stmt->fetch();
-                return new Pessoa($row['nome'], $row['email'], $row['telefone'], $id);
-            }
-
-        }catch (Exception $e){
-            return('Falha ao obter pessoa, '. $e->getMessage());
+            $row = $stmt->fetch();
+            return new Pessoa($row['nome'], $row['email'], $row['telefone'], $id);
         }
     }
 
@@ -66,29 +57,28 @@ class PessoaRepository implements IPessoaRepository
         $email = $pessoa->getEmail();
         $telefone = $pessoa->getTelefone();
         $id = $pessoa->getId();
-        try{
-            if($id == null)
+
+        if($id == null)
+        {
+            throw new Exception("ID com valor ilegal: NULL");
+        }
+        else
+        {
+            $sql = <<<SQL
+                UPDATE pessoa
+                SET nome = COALESCE(?, nome), email = COALESCE(?, email), telefone = COALESCE(?, telefone)
+                WHERE id = ?
+            SQL;
+
+            $stmt = $this->pdo->prepare($sql);
+            if(!$stmt->execute([$nome, $email, $telefone ,$pessoa->getId()]))
             {
-                throw new Exception("ID com valor ilegal: NULL");
+                throw new Exception('Falha ao atualizar pessoa');
             }
-            else
-            {
-                $sql = <<<SQL
-                    UPDATE pessoa
-                    SET nome = COALESCE(?, nome), email = COALESCE(?, email), telefone = COALESCE(?, telefone)
-                    WHERE id = ?
-                SQL;
-
-                $stmt = $this->pdo->prepare($sql);
-                if(!$stmt->execute([$nome, $email, $telefone ,$pessoa->getId()]))
-                {
-                    throw new Exception('Falha ao atualizar pessoa, verificar se valor de ID está correto');
-                }
+            $rowCount = $stmt->rowCount();
+            if ($rowCount === 0) {
+                throw new Exception("Registro com ID $id não encontrado no banco de dados.");
             }
-
-
-        }catch (Exception $e){
-            return($e->getMessage());
         }
     }
 
