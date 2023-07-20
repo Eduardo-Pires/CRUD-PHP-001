@@ -16,15 +16,15 @@ class PessoaRepository implements IPessoaRepository
     {
         try{
             $sql = <<<SQL
-            INSERT INTO Pessoa (nome, email, telefone)
-            VALUES (?,?,?)
+                INSERT INTO Pessoa (nome, email, telefone)
+                VALUES (?,?,?)
             SQL;
 
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$pessoa->getnome(), $pessoa->getEmail(), $pessoa->getTelefone()]);
             $pessoa->setId($this->pdo->lastInsertId());
         }catch (Exception $e){
-            exit('Falha no cadastro da pessoa'. $e->getMessage());
+            return('Falha no cadastro da pessoa, '. $e->getMessage());
         }
     }
 
@@ -36,26 +36,60 @@ class PessoaRepository implements IPessoaRepository
     public function obterPessoaPorId($id)
     {
         try{
-            $sql = <<<SQL
-            SELECT nome, email, telefone
-            FROM pessoa
-            WHERE id = ?
-            SQL;
+            if($id == null)
+            {
+                throw new Exception("ID com valor ilegal: NULL");
+            }
+            else
+            {
+                $sql = <<<SQL
+                    SELECT nome, email, telefone
+                    FROM pessoa
+                    WHERE id = ?
+                SQL;
 
-            $stmt = $this->pdo->prepare($sql);
-            $stmt->execute([$id]);
+                $stmt = $this->pdo->prepare($sql);
+                $stmt->execute($id);
 
-            $row = $stmt->fetch();
-            return new Pessoa($row['nome'], $row['email'], $row['telefone'], $id);
+                $row = $stmt->fetch();
+                return new Pessoa($row['nome'], $row['email'], $row['telefone'], $id);
+            }
 
         }catch (Exception $e){
-            exit('Falha ao obter pessoa'. $e->getMessage());
+            return('Falha ao obter pessoa, '. $e->getMessage());
         }
     }
 
     public function atualizarPessoa($pessoa)
     {
-        // TODO: Implement AtualizarPessoa() method.
+        $nome = $pessoa->getNome();
+        $email = $pessoa->getEmail();
+        $telefone = $pessoa->getTelefone();
+        $id = $pessoa->getId();
+        try{
+            if($id == null)
+            {
+                throw new Exception("ID com valor ilegal: NULL");
+            }
+            else
+            {
+                $sql = <<<SQL
+                    UPDATE pessoa
+                    SET nome = COALESCE(?, nome), email = COALESCE(?, email), telefone = COALESCE(?, telefone)
+                    WHERE id = ?
+                SQL;
+
+                $stmt = $this->pdo->prepare($sql);
+                if(!$stmt->execute([$nome, $email, $telefone ,$pessoa->getId()]))
+                {
+                    throw new Exception('Falha ao atualizar pessoa, verificar se valor de ID está correto');
+                }
+            }
+
+
+        }catch (Exception $e){
+            return($e->getMessage());
+        }
     }
 
     public function excluirPessoa($id)
