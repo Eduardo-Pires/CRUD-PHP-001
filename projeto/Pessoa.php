@@ -7,16 +7,12 @@ class Pessoa
     private $email;
     private $telefone;
 
-    /**
-     * @param $nome
-     * @param $email
-     * @param $telefone
-     */
-    public function __construct($nome, $email, $telefone)
+    public function __construct($nome, $email, $telefone, $id = null)
     {
         $this->nome = $nome;
         $this->email = $email;
         $this->telefone = $telefone;
+        if($id !== null) $this->id = $id;
     }
 
     /**
@@ -82,8 +78,4 @@ class Pessoa
     {
         $this->telefone = $telefone;
     }
-
-
-
-
 }

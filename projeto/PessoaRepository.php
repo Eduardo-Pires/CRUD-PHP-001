@@ -35,7 +35,22 @@ class PessoaRepository implements IPessoaRepository
 
     public function obterPessoaPorId($id)
     {
-        // TODO: Implement ObterPessoaPorId() method.
+        try{
+            $sql = <<<SQL
+            SELECT nome, email, telefone
+            FROM pessoa
+            WHERE id = ?
+            SQL;
+
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$id]);
+
+            $row = $stmt->fetch();
+            return new Pessoa($row['nome'], $row['email'], $row['telefone'], $id);
+
+        }catch (Exception $e){
+            exit('Falha ao obter pessoa'. $e->getMessage());
+        }
     }
 
     public function atualizarPessoa($pessoa)
