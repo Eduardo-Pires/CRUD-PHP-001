@@ -26,7 +26,19 @@ class PessoaRepository implements IPessoaRepository
 
     public function listarPessoas()
     {
-        // TODO: Implement ListarPessoas() method.
+        $sql = <<<SQL
+            SELECT id, nome, email, telefone
+            FROM pessoa
+        SQL;
+
+        $pessoas = [];
+        $stmt = $this->pdo->query($sql);
+        while($row = $stmt->fetch())
+        {
+            $pessoas[] = new Pessoa($row['nome'], $row['email'], $row['telefone'], $row['id']);
+        }
+
+        return $pessoas;
     }
 
     public function obterPessoaPorId($id)
@@ -44,18 +56,24 @@ class PessoaRepository implements IPessoaRepository
             SQL;
 
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute($id);
+            if(!$stmt->execute($id))
+            {
+                throw new Exception("Problemas na obtenção da pessoa");
+            }
 
             $row = $stmt->fetch();
+            if (!$row)
+            {
+                return false;
+            }
+
             return new Pessoa($row['nome'], $row['email'], $row['telefone'], $id);
         }
     }
 
     public function atualizarPessoa($pessoa)
     {
-        $nome = $pessoa->getNome();
-        $email = $pessoa->getEmail();
-        $telefone = $pessoa->getTelefone();
+
         $id = $pessoa->getId();
 
         if($id == null)
@@ -71,7 +89,7 @@ class PessoaRepository implements IPessoaRepository
             SQL;
 
             $stmt = $this->pdo->prepare($sql);
-            if(!$stmt->execute([$nome, $email, $telefone ,$pessoa->getId()]))
+            if(!$stmt->execute([$pessoa->getNome(), $pessoa->getEmail(), $pessoa->getTelefone() ,$pessoa->getId()]))
             {
                 throw new Exception('Falha ao atualizar pessoa');
             }
@@ -84,6 +102,25 @@ class PessoaRepository implements IPessoaRepository
 
     public function excluirPessoa($id)
     {
-        // TODO: Implement ExcluirPessoa() method.
+        if($id == null)
+        {
+            throw new Exception("ID com valor ilegal: NULL");
+        }
+        else {
+            $sql = <<<SQL
+                DELETE  FROM pessoa
+                WHERE id = ?
+            SQL;
+
+            $stmt = $this->pdo->prepare($sql);
+            if(!$stmt->execute([$id]))
+            {
+                throw new Exception("Problemas na deleção da pessoa");
+            }
+            $rowCount = $stmt->rowCount();
+            if ($rowCount === 0) {
+                throw new Exception("Registro com ID $id não encontrado no banco de dados.");
+            }
+        }
     }
 }

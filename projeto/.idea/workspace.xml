@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07061f41-26dc-4435-a30c-1ffe13924f28" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PessoaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/PessoaRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pgConnection.php" beforeDir="false" afterPath="$PROJECT_DIR$/pgConnection.php" afterDir="false" />
@@ -21,6 +20,9 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2SljHwwYXoNdM15ZVLndw5PR0xZ" />
   <component name="ProjectLevelVcsManager">
@@ -60,7 +62,8 @@
       <updated>1689727978672</updated>
       <workItem from="1689727979984" duration="6969000" />
       <workItem from="1689735076550" duration="672000" />
-      <workItem from="1689809435381" duration="1350000" />
+      <workItem from="1689809435381" duration="13812000" />
+      <workItem from="1689999093745" duration="2518000" />
     </task>
     <servers />
   </component>
