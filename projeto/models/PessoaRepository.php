@@ -1,15 +1,13 @@
 <?php
 require_once "Pessoa.php";
 require_once "IPessoaRepository.php";
-require_once "pgConnection.php";
+require_once "configuration/pgConnection.php";
 
-class PessoaRepository implements IPessoaRepository
+class PessoaRepository extends PGConnect  implements IPessoaRepository
 {
-    Private $pdo;
-
     public function __construct()
     {
-        $this->pdo = postgresConnect();
+        parent::__construct();
     }
 
     public function criarPessoa($pessoa)
@@ -33,13 +31,14 @@ class PessoaRepository implements IPessoaRepository
 
         $pessoas = [];
         $stmt = $this->pdo->query($sql);
-        while($row = $stmt->fetch())
-        {
+        while ($row = $stmt->fetch()) {
             $pessoas[] = new Pessoa($row['nome'], $row['email'], $row['telefone'], $row['id']);
         }
 
         return $pessoas;
     }
+
+
 
     public function obterPessoaPorId($id)
     {

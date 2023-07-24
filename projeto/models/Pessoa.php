@@ -1,6 +1,6 @@
 <?php
 
-class Pessoa
+class Pessoa implements JsonSerializable
 {
     private $id;
     private $nome;
@@ -77,5 +77,15 @@ class Pessoa
     public function setTelefone($telefone)
     {
         $this->telefone = $telefone;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'nome' => $this->nome,
+            'email' => $this->email,
+            'telefone' => $this->telefone,
+        ];
     }
 }
