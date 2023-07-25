@@ -13,15 +13,31 @@ class PessoasController
 
     public function listarPessoas()
     {
-        $pessoas = $this->model->listarPessoas();
-        $pessoasJson = [];
+        try {
+            $pessoas = $this->model->listarPessoas();
+            $pessoasJson = [];
+    
+            foreach ($pessoas as $pessoa) {
+                $pessoas[] = $pessoa->serialize();
+            }
 
-        foreach ($pessoas as $pessoa) {
-            $pessoasJson[] = $pessoa->jsonSerialize();
+            require_once ('views/listarPessoas.php');
+        } catch (Exception $e) {
+            exit($e->getMessage());
         }
+    }
 
-        header('Content-Type: application/json; charset=utf-8');
-        echo json_encode($pessoasJson);
+    public function criarPessoa($access = true, $nome, $email, $telefone)
+    {
+        if($access)
+        {
+            require_once('views/CriarPessoa.php');
+        }
+        else
+        {
+            echo 'batata';
+        }
+        
     }
 
 

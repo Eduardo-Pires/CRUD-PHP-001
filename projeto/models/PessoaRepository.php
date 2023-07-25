@@ -38,8 +38,6 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
         return $pessoas;
     }
 
-
-
     public function obterPessoaPorId($id)
     {
         if($id == null)

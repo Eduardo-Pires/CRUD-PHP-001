@@ -5,15 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="07061f41-26dc-4435-a30c-1ffe13924f28" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/controllers/PessoasController.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/routers/RouteCriarPessoa.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/CriarPessoa.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/CriarPessoa.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/listarPessoas.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IPessoaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/IPessoaRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pessoa.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/Pessoa.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PessoaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/PessoaRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pgConnection.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testeBanco.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/PessoasController.php" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/PessoasController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/Pessoa.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/Pessoa.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/PessoaRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/models/PessoaRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +79,8 @@
       <workItem from="1689999093745" duration="2518000" />
       <workItem from="1690161801217" duration="5237000" />
       <workItem from="1690167210350" duration="6960000" />
+      <workItem from="1690174512867" duration="33000" />
+      <workItem from="1690223835173" duration="12032000" />
     </task>
     <servers />
   </component>
