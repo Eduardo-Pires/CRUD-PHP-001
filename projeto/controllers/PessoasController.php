@@ -1,6 +1,7 @@
 <?php
 
 require_once "models/PessoaRepository.php";
+require_once "models/Pessoa.php";
 
 class PessoasController
 {
@@ -15,27 +16,43 @@ class PessoasController
     {
         try {
             $pessoas = $this->model->listarPessoas();
-            $pessoasJson = [];
+            $serializedPessoas = [];
     
             foreach ($pessoas as $pessoa) {
-                $pessoas[] = $pessoa->serialize();
+                $serializedPessoas[] = $pessoa->serialize();
             }
 
-            require_once ('views/listarPessoas.php');
+            require_once ('views/listarPessoasView.php');
         } catch (Exception $e) {
             exit($e->getMessage());
         }
     }
 
-    public function criarPessoa($access = true, $nome, $email, $telefone)
+    public function criarPessoa($access = true, $nome = null, $email = null, $telefone = null)
     {
         if($access)
         {
-            require_once('views/CriarPessoa.php');
+            require_once('views/criarPessoaView.html');
         }
         else
         {
-            echo 'batata';
+            try {
+                $pessoa = new Pessoa(htmlspecialchars($nome), htmlspecialchars($email), htmlspecialchars($telefone));
+                $this->model->criarPessoa($pessoa);
+
+                header('Content-Type: application/json; charset=utf-8');
+                $mensagem = "Pessoas criada com sucesso";
+                $dados = array(
+                    "status" => "sucesso",
+                    "message" => $mensagem
+                );
+
+                header('Content-Type: application/json');
+                echo json_encode($dados);
+            }catch (Exception $e){
+                exit($e->getMessage());
+            }
+
         }
         
     }
