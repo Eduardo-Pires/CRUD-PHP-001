@@ -25,7 +25,10 @@
                     <a class="nav-link active" aria-current="page" href="#">Listar pessoas</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="index.php/?a=criarPessoa">Criar Pessoa</a>
+                  <a class="nav-link" href="?a=criarPessoa">Criar Pessoa</a>
+                </li>
+                <li class="nav-item">
+                  <a a class="nav-link" href="?a=atualizarPessoa">Atualizar Pessoa</a>
                 </li>
             </div>
           </div>

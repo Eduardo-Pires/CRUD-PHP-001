@@ -40,21 +40,46 @@ class PessoasController
                 $pessoa = new Pessoa(htmlspecialchars($nome), htmlspecialchars($email), htmlspecialchars($telefone));
                 $this->model->criarPessoa($pessoa);
 
-                header('Content-Type: application/json; charset=utf-8');
                 $mensagem = "Pessoas criada com sucesso";
                 $dados = array(
-                    "status" => "sucesso",
                     "message" => $mensagem
                 );
 
-                header('Content-Type: application/json');
+                header('Content-Type: application/json; charset=utf-8');
                 echo json_encode($dados);
             }catch (Exception $e){
                 exit($e->getMessage());
             }
+        } 
+    }
 
+    public function atualizarPessoa($access = true, $nome = null, $email = null, $telefone = null, $id = null)
+    {
+        if($access)
+        {
+            require_once('views/atualizarPessoaView.html');
         }
-        
+        else
+        {
+            try {
+                $nome = $nome == "empty"? $nome = null : $nome = htmlspecialchars($nome);
+                $email = $email == "empty"? $email = null: $email = htmlspecialchars($email);
+                $telefone = $telefone == "empty"? $telefone = null: $telefone = htmlspecialchars($telefone);
+
+                $pessoa = new Pessoa($nome, $email, $telefone, $id);
+                $this->model->atualizarPessoa($pessoa);
+
+                $mensagem = "Pessoa atualizada com sucesso";
+                $dados = array(
+                    "message" => $mensagem
+                );
+
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode($dados);
+            }catch (Exception $e){
+                exit($e->getMessage());
+            }
+        } 
     }
 
 
