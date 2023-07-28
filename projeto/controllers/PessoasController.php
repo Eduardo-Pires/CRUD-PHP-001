@@ -3,6 +3,9 @@
 require_once "models/PessoaRepository.php";
 require_once "models/Pessoa.php";
 
+/*essa classe tem por responsabilidade fazer a comunicação entre os models e os views, sendo um intermediario
+ *que também prepara os dados para que funcionem da forma correta
+ */
 class PessoasController
 {
     private $model;
@@ -82,5 +85,61 @@ class PessoasController
         } 
     }
 
+    public function excluirPessoa($access = true, $id= null)
+    {
+        if($access)
+        {
+            require_once('views/excluirPessoaView.html');
+        }
+        else
+        {
+            try {
 
+                $this->model->excluirPessoa($id);
+
+                $mensagem = "Pessoas excluída com sucesso";
+                $dados = array(
+                    "status" => "success",
+                    "message" => $mensagem
+                );
+
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode($dados);
+            }catch (Exception $e){
+                $error = array(
+                    "status" => "error",
+                    "message" => $e->getMessage()
+                );
+                header('Content-Type: application/json; charset=utf-8');
+                exit(json_encode($error));
+            }
+        }
+    }
+
+    public function obterPessoaPorId($access = true, $id= null)
+    {
+        if($access)
+        {
+            require_once('views/obterPessoaPorIdView.html');
+        }
+        else
+        {
+            try {
+
+                $pessoa = $this->model->obterPessoaPorId($id);
+                $dados = $pessoa->serialize();
+                $dados["status"] = "success";
+
+                header('Content-Type: application/json; charset=utf-8');
+                echo json_encode($dados);
+            }catch (Exception $e){
+                $error = array(
+                    "status" => "error",
+                    "message" => $e->getMessage()
+                );
+                header('Content-Type: application/json; charset=utf-8');
+                exit(json_encode($error));
+            }
+        }
+    }
 }

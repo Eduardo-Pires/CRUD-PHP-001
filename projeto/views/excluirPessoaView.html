@@ -11,7 +11,7 @@
     <header>
     <nav class="navbar navbar-dark bg-dark">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Atualizar Pessoa</a>
+          <a class="navbar-brand" href="#">Excluir Pessoa</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -23,19 +23,19 @@
             <div class="offcanvas-body">
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li class="nav-item">
-                    <a class="nav-link" href="?a=listarPessoas">Listar pessoas</a>
+                  <a class="nav-link" href="?a=listarPessoas">Listar pessoas</a>
                 </li>
                 <li class="nav-item">
-                  <a  class="nav-link" href="?a=criarPessoa">Criar Pessoa</a>
+                  <a class="nav-link" href="?a=criarPessoa">Criar Pessoa</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Atualizar Pessoa</a>
+                  <a class="nav-link" href="?a=atualizarPessoa">Atualizar Pessoa</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="?a=excluirPessoa">Excluir Pessoa</a>
+                  <a class="nav-link active" aria-current="page" href="#">Excluir Pessoa</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="?a=obterPessoaPorId">Obter Pessoa Por ID</a>
+                  <a class="nav-link" href="?a=obterPessoaPorId">Obter Pessoa Por ID</a>
                 </li>
               </ul>
             </div>
@@ -46,51 +46,32 @@
     <main class="m-3">
       <div id="container">
         <form id="form" class="row g-3 justify-content-center">
+            <div class="col-12">
+                <label for="id" class="form-label">id:</label>
+                <input type="number" name="id" id="id" class="form-control">
+              </div>
           <div class="col-12">
-            <label for="id" class="form-label">id:</label>
-            <input type="number" name="id" id="id" class="form-control">
-          </div>
-          <div class="col-12">
-            <label for="nome" class="form-label">Nome:</label>
-            <input type="text" name="nome" id="nome" class="form-control">
-          </div>
-          <div class="col-12">
-            <label for="email" class="form-label">Email:</label>
-            <input type="email" name="email" id="email" class="form-control">
-          </div>
-          <div class="col-12">
-            <label for="telefone" class="form-label">Telefone:</label>
-            <input type="tel" name="telefone" id="telefone" class="form-control">
-          </div>
-          <div class="col-12">
-            <input type="submit" value="Atualizar Pessoa" class="btn btn-primary mb-3 col-12">
+            <input type="submit" value="excluir pessoa" class="btn btn-primary mb-3 col-12">
           </div>
         </form>
         <div id="result" class="mt-3"></div>
       </div>
 </main>
 <footer class="py-3 my-4 fixed-bottom">
-  <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-    <li class="nav-item"><a href="https://github.com/Eduardo-Pires" class="nav-link px-2 text-muted">GitHub</a></li>
-    <li class="nav-item"><a href="https://github.com/Eduardo-Pires/CRUD-PHP-001" class="nav-link px-2 text-muted">Repositório do Projeto</a></li>
-    <li class="nav-item"><a href="https://github.com/Eduardo-Pires/CRUD-PHP-001/blob/main/README.md" class="nav-link px-2 text-muted">Sobre</a></li>
-  </ul>
-  <p class="text-center text-muted">Feito por Eduardo Pires</p>
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <li class="nav-item"><a href="https://github.com/Eduardo-Pires" class="nav-link px-2 text-muted">GitHub</a></li>
+      <li class="nav-item"><a href="https://github.com/Eduardo-Pires/CRUD-PHP-001" class="nav-link px-2 text-muted">Repositório do Projeto</a></li>
+      <li class="nav-item"><a href="https://github.com/Eduardo-Pires/CRUD-PHP-001/blob/main/README.md" class="nav-link px-2 text-muted">Sobre</a></li>
+    </ul>
+    <p class="text-center text-muted">Feito por Eduardo Pires</p>
 </footer>
 
 <script>
-    async function atualizarAjax(form) {
+    //classe que realiza requisições assincronas ao servidor
+    async function excluirAjax(form) {
         try {
             const formData = new URLSearchParams(new FormData(form));
-            formData.append('a', 'atualizarPessoa');
-
-            
-            const inputs = form.getElementsByTagName('input');
-            for (let i = 0; i < inputs.length; i++) {
-                const input = inputs[i];
-                const value = input.value.trim() || 'empty';
-                formData.append(input.name, value);
-            }
+            formData.append('a', 'excluirPessoa');
 
             const response = await fetch("?" + formData.toString(), {
                 method: "GET",
@@ -113,8 +94,9 @@
             {
                 throw new Error(data.message);
             }
+
         } catch (error) {
-            let result = document.getElementById("result")
+            let result = document.getElementById("result");
             result.textContent = error.message;
             result.style.color = "#a10833";
         }
@@ -124,7 +106,7 @@
         let formulario = document.getElementById("form");
         formulario.addEventListener("submit", function(event) {
             event.preventDefault(); 
-            atualizarAjax(formulario); 
+            excluirAjax(formulario);
         });
     }
 </script>

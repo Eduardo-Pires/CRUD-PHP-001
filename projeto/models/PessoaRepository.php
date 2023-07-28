@@ -10,6 +10,8 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
         parent::__construct();
     }
 
+    //recebe um objeto pessoa sem o ID definido, cria uma linha no banco e devolve o objeto completo,
+    //apesar de esta função não estar sendo utilizada achei importante para a escalabilidade do projeto
     public function criarPessoa($pessoa)
     {
         $sql = <<<SQL
@@ -22,6 +24,7 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
         $pessoa->setId($this->pdo->lastInsertId());
     }
 
+    //adiciona todas as linhas da tabela em um array de objetos Pessoa
     public function listarPessoas()
     {
         $sql = <<<SQL
@@ -38,6 +41,7 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
         return $pessoas;
     }
 
+    //Obtem uma pessoa pelo seu ID, em especial tem um tratamento de erro para caso não exista a pessoa
     public function obterPessoaPorId($id)
     {
         if($id == null)
@@ -53,7 +57,7 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
             SQL;
 
             $stmt = $this->pdo->prepare($sql);
-            if(!$stmt->execute($id))
+            if(!$stmt->execute([$id]))
             {
                 throw new Exception("Problemas na obtenção da pessoa");
             }
@@ -61,13 +65,14 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
             $row = $stmt->fetch();
             if (!$row)
             {
-                return false;
+                throw new Exception("Pessoa não encontrada");
             }
 
             return new Pessoa($row['nome'], $row['email'], $row['telefone'], $id);
         }
     }
 
+    // Atualiza uma pessoa com base nos atributos do objeto Pessoa, caso um valor seja nulo, o registro do atributo não é alterado
     public function atualizarPessoa($pessoa)
     {
 
@@ -97,6 +102,7 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
         }
     }
 
+    //exclui um registro da tabela caso seja encontrado o ID
     public function excluirPessoa($id)
     {
         if($id == null)

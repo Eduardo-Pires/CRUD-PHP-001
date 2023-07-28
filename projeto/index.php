@@ -1,4 +1,7 @@
 <?php
+    // Nesse arquivo temos o Router, ele define qual operação será ativada e cuida da URL
+     
+
     require "./controllers/PessoasController.php";
     $controller = new PessoasController();
     $action = !empty($_GET['a']) ? $_GET['a'] : 'listarPessoas';

@@ -79,6 +79,8 @@ class Pessoa implements Serializable
         $this->telefone = $telefone;
     }
 
+
+    //deixei a classe "serializavel" para que seja mais fácil enviar os dados em formato json
     public function serialize()
     {
         return [
