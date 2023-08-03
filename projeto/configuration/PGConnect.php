@@ -9,6 +9,11 @@ class PGConnect
         $this->postgresConnect();
     }
 
+    public function rollBackPDO()
+    {
+        $this->pdo->rollBack();
+    }
+
     function postgresConnect()
     {   
         //adicionar os valores caso desejar rodar o projeto, a tabela foi disponibilizada nessa mesma pasta
