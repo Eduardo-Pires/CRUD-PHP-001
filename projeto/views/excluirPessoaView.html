@@ -48,7 +48,7 @@
         <form id="form" class="row g-3 justify-content-center">
             <div class="col-12">
                 <label for="id" class="form-label">id:</label>
-                <input type="number" name="id" id="id" class="form-control">
+                <input type="number" name="id" id="id" class="form-control" required>
               </div>
           <div class="col-12">
             <input type="submit" value="excluir pessoa" class="btn btn-primary mb-3 col-12">
@@ -105,7 +105,7 @@
     window.onload = function(){
         let formulario = document.getElementById("form");
         formulario.addEventListener("submit", function(event) {
-            event.preventDefault(); 
+            event.preventDefault();
             excluirAjax(formulario);
         });
     }

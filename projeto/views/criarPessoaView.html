@@ -48,15 +48,15 @@
         <form id="form" class="row g-3 justify-content-center">
           <div class="col-12">
             <label for="nome" class="form-label">Nome:</label>
-            <input type="text" name="nome" id="nome" class="form-control">
+            <input type="text" name="nome" id="nome" class="form-control" required>
           </div>
           <div class="col-12">
             <label for="email" class="form-label">Email:</label>
-            <input type="email" name="email" id="email" class="form-control">
+            <input type="email" name="email" id="email" class="form-control" required>
           </div>
           <div class="col-12">
             <label for="telefone" class="form-label">Telefone:</label>
-            <input type="tel" name="telefone" id="telefone" class="form-control">
+            <input type="tel" name="telefone" id="telefone" class="form-control" required>
           </div>
           <div class="col-12">
             <input type="submit" value="Criar Pessoa" class="btn btn-primary mb-3 col-12">
@@ -98,6 +98,7 @@
                 let result = document.getElementById("result")
                 result.textContent = data.message;
                 result.style.color = "#08A04B";
+
             }
             else
             {
@@ -107,14 +108,15 @@
             let result = document.getElementById("result")
             result.textContent = error.message;
             result.style.color = "#a10833";
+
         }
     }
 
     window.onload = function(){
         let formulario = document.getElementById("form");
         formulario.addEventListener("submit", function(event) {
-            event.preventDefault(); 
-            criarAjax(formulario); 
+            event.preventDefault();
+            criarAjax(formulario);
         });
     }
 </script>

@@ -27,7 +27,12 @@ class PessoasController
 
             require_once ('views/listarPessoasView.php');
         } catch (Exception $e) {
-            exit($e->getMessage());
+            $error = array(
+                "status" => "error",
+                "message" => $e->getMessage()
+            );
+            header('Content-Type: application/json; charset=utf-8');
+            exit(json_encode($error));
         }
     }
 
@@ -43,15 +48,22 @@ class PessoasController
                 $pessoa = new Pessoa(htmlspecialchars($nome), htmlspecialchars($email), htmlspecialchars($telefone));
                 $this->model->criarPessoa($pessoa);
 
-                $mensagem = "Pessoas criada com sucesso";
+                $mensagem = "Pessoa criada com sucesso";
                 $dados = array(
+                    "status" => "success",
                     "message" => $mensagem
                 );
 
                 header('Content-Type: application/json; charset=utf-8');
                 echo json_encode($dados);
             }catch (Exception $e){
-                exit($e->getMessage());
+                $this->model->rollBackPDO();
+                $error = array(
+                    "status" => "error",
+                    "message" => $e->getMessage()
+                );
+                header('Content-Type: application/json; charset=utf-8');
+                exit(json_encode($error));
             }
         } 
     }
@@ -74,13 +86,20 @@ class PessoasController
 
                 $mensagem = "Pessoa atualizada com sucesso";
                 $dados = array(
+                    "status" => "success",
                     "message" => $mensagem
                 );
 
                 header('Content-Type: application/json; charset=utf-8');
                 echo json_encode($dados);
             }catch (Exception $e){
-                exit($e->getMessage());
+                $this->model->rollBackPDO();
+                $error = array(
+                    "status" => "error",
+                    "message" => $e->getMessage()
+                );
+                header('Content-Type: application/json; charset=utf-8');
+                exit(json_encode($error));
             }
         } 
     }
@@ -106,6 +125,7 @@ class PessoasController
                 header('Content-Type: application/json; charset=utf-8');
                 echo json_encode($dados);
             }catch (Exception $e){
+                $this->model->rollBackPDO();
                 $error = array(
                     "status" => "error",
                     "message" => $e->getMessage()

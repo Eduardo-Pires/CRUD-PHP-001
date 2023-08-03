@@ -1,7 +1,7 @@
 <?php
 require_once "Pessoa.php";
 require_once "IPessoaRepository.php";
-require_once "configuration/pgConnection.php";
+require_once "configuration/PGConnect.php";
 
 class PessoaRepository extends PGConnect  implements IPessoaRepository
 {
@@ -18,10 +18,13 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
             INSERT INTO Pessoa (nome, email, telefone)
             VALUES (?,?,?)
         SQL;
+        $this->pdo->beginTransaction();
 
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$pessoa->getnome(), $pessoa->getEmail(), $pessoa->getTelefone()]);
         $pessoa->setId($this->pdo->lastInsertId());
+
+        $this->pdo->commit();
     }
 
     //adiciona todas as linhas da tabela em um array de objetos Pessoa
@@ -67,7 +70,6 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
             {
                 throw new Exception("Pessoa não encontrada");
             }
-
             return new Pessoa($row['nome'], $row['email'], $row['telefone'], $id);
         }
     }
@@ -89,7 +91,7 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
                 SET nome = COALESCE(?, nome), email = COALESCE(?, email), telefone = COALESCE(?, telefone)
                 WHERE id = ?
             SQL;
-
+            $this->pdo->beginTransaction();
             $stmt = $this->pdo->prepare($sql);
             if(!$stmt->execute([$pessoa->getNome(), $pessoa->getEmail(), $pessoa->getTelefone() ,$pessoa->getId()]))
             {
@@ -99,6 +101,7 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
             if ($rowCount === 0) {
                 throw new Exception("Registro com ID $id não encontrado no banco de dados.");
             }
+            $this->pdo->commit();
         }
     }
 
@@ -114,7 +117,7 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
                 DELETE  FROM pessoa
                 WHERE id = ?
             SQL;
-
+            $this->pdo->beginTransaction();
             $stmt = $this->pdo->prepare($sql);
             if(!$stmt->execute([$id]))
             {
@@ -124,6 +127,7 @@ class PessoaRepository extends PGConnect  implements IPessoaRepository
             if ($rowCount === 0) {
                 throw new Exception("Registro com ID $id não encontrado no banco de dados.");
             }
+            $this->pdo->commit();
         }
     }
 }
