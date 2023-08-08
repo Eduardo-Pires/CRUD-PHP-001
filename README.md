@@ -23,4 +23,4 @@ Backend:
 O código deve ser legível, bem-organizado e seguir as melhores práticas de desenvolvimento. Certifique-se de tratar possíveis erros e exceções, e comente o código quando necessário para explicar a lógica ou intenção do trecho.
 
 ---
-**Créditos**: Este repositório foi criado com base em um teste de um processo seletivo da empresa [TechOne](https://techone.com.br). Embora eu não tenha participado diretamente, recebi permissão dos superiores de um amigo próximo que participou para que pudesse utilizar seu texto como inspiração para criar este projeto. Portanto, gostaria de creditar a eles a autoria do enunciado acima.
+**Créditos**: Este repositório foi criado com base em um teste de um processo seletivo da empresa [TechOne](https://techone-it.com.br/). Embora eu não tenha participado diretamente, recebi permissão dos superiores de um amigo próximo que participou para que pudesse utilizar seu texto como inspiração para criar este projeto. Portanto, gostaria de creditar a eles a autoria do enunciado acima.
